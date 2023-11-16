@@ -1,0 +1,40 @@
+import random
+
+# Define a dictionary of place names and facts
+places = {
+    "Paris": "The capital of France",
+    "Tokyo": "The capital of Japan",
+    "New York": "The largest city in the United States",
+    # Add more places and facts as needed
+}
+
+def quiz():
+    # Get a random place from the dictionary
+    place = random.choice(list(places.keys()))
+
+    # Display the fact and ask the user to guess the place
+    print("Fact: " + places[place])
+    guess = input("Guess the place: ")
+
+    # Check if the guess is correct
+    if guess.lower() == place.lower():
+        print("Correct! Well done.")
+    else:
+        print(f"Wrong! The correct answer is {place}.")
+
+def main():
+    print("Welcome to the Place Names Quiz Game!")
+
+    while True:
+        # Start a new round of the quiz
+        quiz()
+
+        # Ask the user if they want to play again
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        if play_again != 'yes':
+            break
+
+    print("Thanks for playing!")
+
+if __name__ == "__main__":
+    main()
