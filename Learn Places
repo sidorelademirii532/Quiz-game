@@ -1,6 +1,5 @@
 import random
 
-# Define a dictionary of place names and facts
 places = {
     "Paris": "The capital of France",
     "Tokyo": "The capital of Japan",
@@ -8,26 +7,55 @@ places = {
     # Add more places and facts as needed
 }
 
-def quiz():
-    # Get a random place from the dictionary
-    place = random.choice(list(places.keys()))
+categories = {
+    "Capitals": ["Paris", "Tokyo"],
+    "Cities": ["New York"],
+    # Add more categories and places as needed
+}
 
-    # Display the fact and ask the user to guess the place
-    print("Fact: " + places[place])
+def select_category():
+    print("Choose a category:")
+    for category in categories:
+        print(category)
+    
+    selected_category = input("Enter the category: ").capitalize()
+    if selected_category in categories:
+        return selected_category
+    else:
+        print("Invalid category. Try again.")
+        return select_category()
+
+def get_random_place(category_places):
+    return random.choice(list(category_places.keys()))
+
+def quiz(category_places):
+    place = get_random_place(category_places)
+    fact = category_places[place]
+
+    # Display a hint before asking for the guess
+    hint = input(f"Hint: The first letter of the place is '{place[0]}'. Do you want to use this hint? (yes/no): ").lower()
+    if hint == 'yes':
+        print(f"Hint: {fact[:15]}...")
+
     guess = input("Guess the place: ")
 
     # Check if the guess is correct
     if guess.lower() == place.lower():
         print("Correct! Well done.")
+        return True
     else:
         print(f"Wrong! The correct answer is {place}.")
+        return False
 
 def main():
     print("Welcome to the Place Names Quiz Game!")
 
+    selected_category = select_category()
+    places_in_category = {k: v for k, v in places.items() if k in categories[selected_category]}
+
     while True:
-        # Start a new round of the quiz
-        quiz()
+        # Start a new round of the quiz with places from the selected category
+        quiz(places_in_category)
 
         # Ask the user if they want to play again
         play_again = input("Do you want to play again? (yes/no): ").lower()
