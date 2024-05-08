@@ -53,16 +53,18 @@ def main():
     selected_category = select_category()
     places_in_category = {k: v for k, v in places.items() if k in categories[selected_category]}
 
-    while True:
-        # Start a new round of the quiz with places from the selected category
-        quiz(places_in_category)
+    score = 0
+    total_questions = 5  # Number of questions per round
+    for _ in range(total_questions):
+        if quiz(places_in_category):
+            score += 1
 
-        # Ask the user if they want to play again
-        play_again = input("Do you want to play again? (yes/no): ").lower()
-        if play_again != 'yes':
-            break
-
-    print("Thanks for playing!")
+    print(f"Your final score: {score}/{total_questions}")
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+    if play_again == 'yes':
+        main()
+    else:
+        print("Thanks for playing!")
 
 if __name__ == "__main__":
     main()
